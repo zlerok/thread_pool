@@ -1,4 +1,5 @@
 #include "ThreadPool.h"
+#include <exception>
 
 ThreadPool::ThreadPool(size_t th_num) :
 max_tasks_(1024), max_threads_(th_num), task_queue_(), work_pool_(), 
@@ -19,7 +20,7 @@ bool ThreadPool::add_task(const fn_type &fun, int priority)
 {
 	if (is_hard_stoped_ || is_soft_stoped_)
 	{
-		return false;
+		throw std::logic_error("thread pool has been stoped yet\n");
 	}
 
 	mutex_.lock();

@@ -1,7 +1,7 @@
 #include <iostream>  
 #include <fstream>
 #include <vector>
-#include "ThreadPool.h"
+#include "../src/ThreadPool.h"
 
 std::ofstream out("log.txt");
 
@@ -52,16 +52,30 @@ int main(int argc, char* argv[])
 
 	std::cout << "added 6th task\n";
 	out << "added 6th task\n";
-	pool.add_task(f, 3);
-	pool.add_task(f, 1);
-	pool.add_task(f, 0);
-
-
+	try
+	{
+		pool.add_task(f, 3);
+	}
+	catch (std::logic_error& e)
+	{
+		std::cout << e.what();
+		out << e.what();
+	}
+	
 	boost::this_thread::sleep_for(boost::chrono::seconds(6));
 	std::cout << "hard_stop\n";
 	out << "hard_stop\n";
 	pool.hard_stop();
 
+	try
+	{
+		pool.add_task(f, 3);
+	}
+	catch (std::logic_error& e)
+	{
+		std::cout << e.what();
+		out << e.what();
+	}
 
 	boost::this_thread::sleep_for(boost::chrono::seconds(30));
 	return 0;

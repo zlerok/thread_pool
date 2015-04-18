@@ -16,7 +16,7 @@ public:
 	//task - function without arguments and any return value;
 	//priority - priority of the task
 	//returns true, if task added to queue
-	//todo: erase exception
+	//throw std::logic_exception if pool has been stoped
 	bool add_task(const boost::function<void()> &task, int priority); 
 	
 	//stops to task recieve by thread pool
